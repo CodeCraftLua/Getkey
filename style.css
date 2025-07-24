@@ -1,28 +1,18 @@
 body {
   margin: 0;
   font-family: 'Courier New', monospace;
-  background: linear-gradient(135deg, #3b0a6b, #0d1e40);
+  background: #000;
   overflow: hidden;
   color: white;
 }
 
-.background-animation {
+#matrixCanvas {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  animation: scroll 3s linear infinite;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
-}
-
-@keyframes scroll {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100%; }
+  background: #000;
 }
 
 .container {
@@ -56,7 +46,7 @@ body {
   margin-top: 40px;
 }
 
-#generateBtn {
+#generateBtn, #copyBtn {
   padding: 15px 25px;
   font-size: 1rem;
   background: #8a2be2;
@@ -66,9 +56,10 @@ body {
   cursor: pointer;
   box-shadow: 0 0 10px #8a2be2;
   transition: 0.2s;
+  margin: 10px;
 }
 
-#generateBtn:hover {
+#generateBtn:hover, #copyBtn:hover {
   background: #a055ff;
 }
 
@@ -83,4 +74,3 @@ body {
   font-size: 0.85rem;
   opacity: 0.6;
 }
-  
