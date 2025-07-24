@@ -22,7 +22,7 @@ document.getElementById("generateBtn").onclick = () => {
 
   const randomKey = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
   const finalKey = keyPrefix + randomKey;
-  document.getElementById("keyDisplay").textContent = `✅ Your Key: ${finalKey}`;
+  document.getElementById("keyDisplay").textContent = `Your Key: ${finalKey}`;
   hasGenerated = true;
   keyExpireTime = new Date(now.getTime() + 60 * 60 * 1000); // 1 jam
 };
