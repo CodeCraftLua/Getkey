@@ -18,13 +18,13 @@ const copyBtn = document.getElementById("copyBtn");
 document.getElementById("generateBtn").onclick = () => {
   const now = new Date();
   if (hasGenerated && now < keyExpireTime) {
-    alert("⛔ Kamu sudah generate key. Tunggu 1 jam.");
+    alert("⛔ You have generated the key. Please wait 1 hour.");
     return;
   }
 
   const randomKey = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
   const finalKey = keyPrefix + randomKey;
-  document.getElementById("keyDisplay").textContent = `✅ Your Key: ${finalKey}`;
+  document.getElementById("keyDisplay").textContent = `Your Key: ${finalKey}`;
   copyBtn.style.display = "inline-block";
   copyBtn.setAttribute("data-key", finalKey);
   hasGenerated = true;
@@ -36,14 +36,13 @@ copyBtn.onclick = () => {
   navigator.clipboard.writeText(key).then(() => {
     copyBtn.textContent = "✅ Copied!";
     setTimeout(() => {
-      copyBtn.textContent = "📋 Copy Key";
+      copyBtn.textContent = "📃 Copy Key";
     }, 1500);
   }).catch(err => {
-    alert("❌ Gagal menyalin key.");
+    alert("❌ Failed to copy key.");
   });
 };
 
-// Matrix animation
 const canvas = document.getElementById("matrixCanvas");
 const ctx = canvas.getContext("2d");
 canvas.height = window.innerHeight;
