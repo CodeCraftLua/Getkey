@@ -13,16 +13,58 @@ const possibleKeys = [
 let hasGenerated = false;
 let keyExpireTime = null;
 
+const copyBtn = document.getElementById("copyBtn");
+
 document.getElementById("generateBtn").onclick = () => {
   const now = new Date();
   if (hasGenerated && now < keyExpireTime) {
-    alert("⛔ You have generated the key. Please wait 1 hour..");
+    alert("⛔ You have generated the key. Please wait 1 hour.");
     return;
   }
 
   const randomKey = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
   const finalKey = keyPrefix + randomKey;
   document.getElementById("keyDisplay").textContent = `Your Key: ${finalKey}`;
+  copyBtn.style.display = "inline-block";
+  copyBtn.setAttribute("data-key", finalKey);
   hasGenerated = true;
-  keyExpireTime = new Date(now.getTime() + 60 * 60 * 1000); // 1 jam
+  keyExpireTime = new Date(now.getTime() + 60 * 60 * 1000);
 };
+
+copyBtn.onclick = () => {
+  const key = copyBtn.getAttribute("data-key");
+  navigator.clipboard.writeText(key).then(() => {
+    copyBtn.textContent = "✅ Copied!";
+    setTimeout(() => {
+      copyBtn.textContent = "📋 Copy Key";
+    }, 1500);
+  }).catch(err => {
+    alert("❌ Failed to copy key.");
+  });
+};
+
+const canvas = document.getElementById("matrixCanvas");
+const ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-=_+[]{}|;:',.<>?".split("");
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#8a2be2";
+  ctx.font = fontSize + "px monospace";
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(drawMatrix, 33);
